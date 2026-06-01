@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A premium, accessible single-page Pomodoro Timer application with daily persistence and automatic session transitions. Optimize your daily productivity.">
+  <title>Aura Pomodoro - Modern Focus & Break Timer</title>
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-focus">
+  <main class="app-container" id="app-root">
+    
+    <!-- Title and Header for SEO -->
+    <header class="app-header">
+      <h1 class="logo-text">Aura<span>Pomodoro</span></h1>
+      <p class="subtitle-text">Sync your focus, elevate your productivity</p>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <div class="workspace-grid">
+      
+      <!-- Timer Panel Card -->
+      <section class="panel-card timer-panel" aria-labelledby="timer-title">
+        <h2 id="timer-title" class="sr-only">Focus Countdown Timer</h2>
+        
+        <!-- Mode Indicator Badge -->
+        <div class="mode-badge-container">
+          <div id="mode-badge" class="mode-badge focus-mode" role="status" aria-live="polite">
+            <span class="pulse-indicator"></span>
+            <span id="mode-text">Focus Mode</span>
+          </div>
+        </div>
+
+        <!-- SVG Circular Progress Ring & Timer Display -->
+        <div class="progress-ring-container">
+          <svg class="progress-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <!-- Track Circle -->
+            <circle class="progress-ring-track" cx="100" cy="100" r="88" />
+            <!-- Active Fill Circle -->
+            <circle class="progress-ring-fill" id="progress-circle" cx="100" cy="100" r="88" />
+          </svg>
+          
+          <!-- Countdown Display inside the circle -->
+          <div class="timer-display-content">
+            <div id="countdown-text" class="countdown" role="timer" aria-live="off" aria-atomic="true">25:00</div>
+            <div id="timer-subtext" class="timer-subtext">Stay focused</div>
+          </div>
+        </div>
+
+        <!-- Timer Controls Group -->
+        <div class="timer-controls">
+          <button id="btn-start" class="btn btn-primary" aria-label="Start Focus Timer">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Start
+          </button>
+          
+          <button id="btn-pause" class="btn btn-warning hidden" aria-label="Pause Timer">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+            Pause
+          </button>
+          
+          <button id="btn-resume" class="btn btn-success hidden" aria-label="Resume Focus Timer">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Resume
+          </button>
+          
+          <button id="btn-reset" class="btn btn-secondary hidden" aria-label="Reset Focus Timer">
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+            Reset
+          </button>
+        </div>
+      </section>
+
+      <!-- Settings and Config Panel Card -->
+      <section class="panel-card settings-panel" aria-labelledby="settings-title">
+        <h2 id="settings-title" class="section-heading">Settings</h2>
+        
+        <div class="settings-grid">
+          <!-- Focus Duration Setting -->
+          <div class="setting-group">
+            <label for="input-focus" class="setting-label">Focus Duration (mins)</label>
+            <div class="setting-input-wrapper">
+              <input type="number" id="input-focus" class="setting-input" value="25" min="1" max="180" aria-label="Focus Duration in Minutes">
+              <div class="input-controls">
+                <button type="button" class="btn-input-adj" id="btn-focus-dec" aria-label="Decrease focus duration by 1 minute">-</button>
+                <button type="button" class="btn-input-adj" id="btn-focus-inc" aria-label="Increase focus duration by 1 minute">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Break Duration Setting -->
+          <div class="setting-group">
+            <label for="input-break" class="setting-label">Break Duration (mins)</label>
+            <div class="setting-input-wrapper">
+              <input type="number" id="input-break" class="setting-input" value="5" min="1" max="60" aria-label="Break Duration in Minutes">
+              <div class="input-controls">
+                <button type="button" class="btn-input-adj" id="btn-break-dec" aria-label="Decrease break duration by 1 minute">-</button>
+                <button type="button" class="btn-input-adj" id="btn-break-inc" aria-label="Increase break duration by 1 minute">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="keyboard-shortcuts-tips">
+          <p class="tips-heading">Keyboard Shortcuts</p>
+          <ul class="tips-list">
+            <li><kbd>Spacebar</kbd> — Start / Pause / Resume</li>
+            <li><kbd>Esc</kbd> — Reset Timer</li>
+            <li><kbd>T</kbd> — Test Chime / Sound</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Daily History Panel Card -->
+      <section class="panel-card history-panel" aria-labelledby="history-title">
+        <div class="history-header">
+          <h2 id="history-title" class="section-heading">Today's History</h2>
+          <button id="btn-clear-history" class="btn btn-text hidden" aria-label="Clear all focus history for today">Clear</button>
+        </div>
+        
+        <!-- Sessions List Container -->
+        <div class="history-list-wrapper">
+          <ul id="history-list" class="history-list" aria-live="polite">
+            <!-- Dynamically populated -->
+          </ul>
+          <div id="history-empty" class="history-empty">
+            <svg class="empty-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+            <p>No completed focus sessions yet today.</p>
+            <p class="secondary-empty-text">Time to start your first block!</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Screen Reader and Keyboard Navigation Instructions -->
+    <section class="sr-only" aria-label="Keyboard controls guide">
+      Press Spacebar to play or pause the current session. Press Escape to reset the timer to its initial duration. Use Tab to jump between buttons and inputs.
+    </section>
+
+    <!-- Overlay Modal for Alerts & Success Animations -->
+    <div id="toast-overlay" class="toast-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="toast-title">
+      <div class="toast-card">
+        <!-- Success Check Icon SVG with animation class -->
+        <div class="success-checkmark-wrapper">
+          <svg class="checkmark-svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+        </div>
+        <h3 id="toast-title" class="toast-title">Focus Session Complete!</h3>
+        <p id="toast-message" class="toast-message">Time for a break.</p>
+        <button id="btn-close-toast" class="btn btn-modal" aria-label="Dismiss complete notification">Dismiss</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>Aura Pomodoro is built with vanilla web modules. Respects your local privacy and storage.</p>
+  </footer>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

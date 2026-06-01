@@ -1,0 +1,23 @@
+{
+  "name": "aura-pomodoro",
+  "version": "1.0.0",
+  "description": "A premium, accessible Pomodoro Timer application with daily persistence and transitions, built using modular ES6+ JavaScript, CSS3, and HTML5.",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "http-server -p 3000"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "pomodoro",
+    "timer",
+    "vanilla-js",
+    "accessibility",
+    "productivity",
+    "localstorage"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
